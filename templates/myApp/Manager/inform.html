@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>二级管理员登录</title>
+    <link rel="stylesheet" href="../../../static/myApp/layui/css/layui.css">
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">“一报告两评议”系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    二级管理员
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">一级管理员</a></dd>
+                    <dd><a href="">普通用户</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd>
+                            <a href="/myApp/Manager/inform/">发布通知</a>
+                        </dd>
+                        <dd>
+                            <a href="/myApp/Manager/register/">创建随机账户</a>
+                        </dd>
+                        <dd>
+                            <a href="/myApp/Manager/addpeople/">参评人员导入</a>
+                        </dd>
+                        <dd>
+                            <a href="/myApp/Manager/result/">评议结果</a>
+                        </dd>
+                        <dd>
+                            <a href="/myApp/Manager/check/">实时查询</a>
+                        </dd>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 0px;">
+            <div class="layui-form">
+                <table class="layui-table" lay-size="lg" , style="margin-top: 0;">
+                    <colgroup>
+                        <col width="50">
+                        <col width="350">
+                        <col width="50">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th style="text-align: center; font-weight: bold;font-size: 20px;">发布日期</th>
+                        <th style="text-align: center; font-weight: bold;font-size: 20px;">通知内容</th>
+                        <th style="text-align: center; font-weight: bold;font-size: 20px;">负责人</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="text-align: center;">
+                        <td>2019-11-06</td>
+                        <td></textarea></td>
+                        <td>张泽宇</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td>张爱玲</td>
+                        <td>146无敌</td>
+                        <td>1920-09-30</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td>Helen Keller</td>
+                        <td>146无敌</td>
+                        <td>1880-06-27</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td>岳飞</td>
+                        <td>146无敌</td>
+                        <td>1103-北宋崇宁二年</td>
+
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td>孟子</td>
+                        <td>146无敌</td>
+                        <td>公元前-372年</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">发布内容</label>
+                <div class="layui-input-block" style="margin-right: 10px; width: 50%;">
+                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text" style="margin-left: 35px;">
+                负责人签字<input type="text" name="name" style="margin-left: 5px;"/>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
+                    style="margin-left: 110px; margin-top: 10px;">确认发布
+            </button>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm"
+                    style="margin-top: 10px;">取消
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="layui-footer">
+    <!-- 底部固定区域 -->
+    ©平朔煤矿
+</div>
+</div>
+<script src="../../../static/myApp/layui/layui.js"></script>
+<script>
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+
+</html>

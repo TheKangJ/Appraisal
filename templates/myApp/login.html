@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="{% static 'myApp/css/login.css' %}">
+	<script type="text/javascript" src="{% static '/myApp/layui/layui.js' %}"></script>
+	<script type="text/javascript" src="{% static '/myApp/js/login.js' %}"></script>
+	<title>登录</title>
+</head>
+<body>
+	<div class="login">
+		<h1>博客管理系统</h1>
+		<form >
+			{% csrf_token %}
+			<input type="text" name="account" placeholder="用户名" id="account" />
+			<input type="password" name="password" placeholder="密码" id="password" />
+			<input type="button" value="登录" class="btn btn-primary btn-block btn-large" onclick="doLogin()"/>
+		</form>
+	</div>
+
+</body>
+</html>

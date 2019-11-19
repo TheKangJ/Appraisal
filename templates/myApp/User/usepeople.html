@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <title>选人用人工作评议</title>
+    <script type="text/javascript" src="{% static '/myApp/layui/layui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'myApp/css/layui.css' %}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-col-md3">
+            <div class="layui-logo">
+                <img src="../../../static/myApp/images/logo.png" class="layui-nav-img">
+                <span style="font-size: 15px;color: #FFB800;">"一报告两评议"系统</span>
+            </div>
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    登陆成功
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd>
+                        <a href="/myApp/User/acceptinfo/">通知</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/User/newselect/">新选拔任用干部民主评议</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/User/usepeople/">选人用人工作评议</a>
+                    </dd>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div>
+
+
+            <form class="layui-form layui-form-pane" action="">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <div style="font-size: 15px">1、对本单位选人用人工作的总体评价</div>
+                    </legend>
+                </fieldset>
+                <div class="layui-input-block">
+                    <input type="radio" name="question1" value="4" title="满意">
+                    <input type="radio" name="question1" value="3" title="基本满意">
+                    <input type="radio" name="question1" value="2" title="不满意">
+                    <input type="radio" name="question1" value="1" title="不了解">
+
+                </div>
+
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <div style="font-size: 15px">2、对本单位执行选人用人工作政策法规情况的看法</div>
+                    </legend>
+                </fieldset>
+                <div class="layui-input-block">
+                    <input type="radio" name="question2" value="4" title="满意">
+                    <input type="radio" name="question2" value="3" title="基本满意">
+                    <input type="radio" name="question2" value="2" title="不满意">
+                    <input type="radio" name="question2" value="1" title="不了解">
+
+                </div>
+
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <div style="font-size: 15px">3、对本单位整治用人上不正之风工作的看法</div>
+                    </legend>
+                </fieldset>
+                <div class="layui-input-block">
+                    <input type="radio" name="question3" value="4" title="满意">
+                    <input type="radio" name="question3" value="3" title="基本满意">
+                    <input type="radio" name="question3" value="2" title="不满意">
+                    <input type="radio" name="question3" value="1" title="不了解">
+
+                </div>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <div style="font-size: 15px">4、对本单位深化干部人事制度改革的看法</div>
+                    </legend>
+                </fieldset>
+                <div class="layui-input-block">
+                    <input type="radio" name="question4" value="4" title="满意">
+                    <input type="radio" name="question4" value="3" title="基本满意">
+                    <input type="radio" name="question4" value="2" title="不满意">
+                    <input type="radio" name="question4" value="1" title="不了解">
+
+                </div>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>
+                        <div style="font-size: 15px">5、你认为本单位选人用人工作存在的突出问题是什么（可多选）</div>
+                    </legend>
+                </fieldset>
+                <div class="layui-col-md6 layui-col-lg-offset1">
+
+                    <div class="layui-form-item">
+
+                        <input type="checkbox" name="question5_1" lay-skin="primary"
+                               title="（1）执行《干部任用条例》规定的资格、条件和程序不严格">
+                        <br>
+                        <input type="checkbox" name="question5_2" lay-skin="primary" title="（2）任人唯亲 ">
+                        <br>
+                        <input type="checkbox" name="question5_3" lay-skin="primary" title="（3）领导干部用人上个人说了算">
+                        <br>
+                        <input type="checkbox" name="question5_4" lay-skin="primary" title="（4）跑官要官、说情打招呼">
+                        <br>
+                        <input type="checkbox" name="question5_5" lay-skin="primary" title="（5）买官卖官">
+                        <br>
+                        <input type="checkbox" name="question5_6" lay-skin="primary" title="（6）拉票">
+                        <br>
+                        <input type="checkbox" name="question5_8" lay-skin="primary" title="（7）不存在突出问题">
+
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="layui-col-md8 ">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">其他问题</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="question5_7" lay-verify="title" autocomplete="off"
+                                       placeholder="请填写具体问题内容"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">意见和建议</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="question6" lay-verify="title" autocomplete="off"
+                                       placeholder="你对本单位选人用人工作有何意见和建议？"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 确认递交 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <!--  <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">赋值
+                          </button>
+                          <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-getval">取值
+                          </button>-->
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 平朔集团
+    </div>
+</div>
+
+
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+    layui.use('table', function () {
+        var table = layui.table;
+
+        function set(val) {
+            console.log(val)
+        }
+
+        table.render({
+            elem: '#demo1'
+            , url: '../test1.json' //数据接口
+            , height: 520
+            , page: true //开启分页
+            , cols: [[ //标题栏
+                , {align: 'center', title: '新选拔任用干部', colspan: 4}
+                //colspan即横跨的单元格数，这种情况下不用设置field和width
+            ], [
+                {field: 'id', title: '部门名称', width: 100}
+
+
+                , {
+                    align: 'center',
+                    title: '满意',
+                    width: 100,
+                    toolbar: '#demo3'
+                }
+                , {
+                    align: 'center',
+                    title: '基本满意',
+                    width: 100,
+                    toolbar: '#demo3'
+                }
+                , {
+                    align: 'center',
+                    title: '不满意',
+                    width: 100,
+                    toolbar: '#demo3'
+                }
+                , {
+                    align: 'center',
+                    title: '不了解',
+                    width: 100,
+                    toolbar: '#demo3'
+                }
+            ]]
+        });
+    })
+
+
+</script>
+
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+            , layer = layui.layer;
+
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            if(!data.field["question1"] || !data.field["question2"] || !data.field["question3"]|| !data.field["question4"]){
+                layer.open({
+                    title: '提示',
+                    content: '请填写完再提交！'
+                });
+                return false;
+            }else if(!data.field["question5_1"] && !data.field["question5_2"] && !data.field["question5_3"]&&!data.field["question5_4"]&&!data.field["question5_5"]&&!data.field["question5_6"]&&!data.field["question5_8"] ){
+                layer.open({
+                    title: '提示',
+                    content: '第五题请至少选择一项！'
+                });
+                return false;
+            }
+            var obj = {};
+            var qustion_single = ["question1", "question2", "question3", "question4"];
+            var qustion_mulit = ["question5_1", "question5_2", "question5_3", "question5_4", "question5_5", "question5_6", "question5_8"];
+            for (var i = 0; i < 11; i++) {
+                if (i < 4) {
+                    obj[qustion_single[i]] = data.field[qustion_single[i]]
+                } else {
+                    obj[qustion_mulit[i - 4]] = data.field[qustion_mulit[i - 4]] == "on" ? "1" : "0";
+                }
+            }
+            obj["question5_7"] = data.field["question5_7"];
+            obj["question6"] = data.field["question6"];
+
+            var jsonData = JSON.stringify(obj);
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", "/myApp/User/selectapoint", true);
+            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+            xhr.send("data=" + jsonData);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if (xhr.responseText == "ok") {
+                            layer.open({
+                                title: '提示',
+                                content: '提交成功！'
+                            });
+                    } else if (xhr.responseText == "resubmit") {
+                            layer.open({
+                                title: '提示',
+                                content: '请勿重复投票！'
+                            });
+
+                    } else {
+                    }
+                }
+            };
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

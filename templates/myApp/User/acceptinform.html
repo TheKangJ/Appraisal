@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通知</title>
+    <link rel="stylesheet" href="../layui-v2.5.5">
+    <script src="../../../static/myApp/layui/layui.js"></script>
+  <link rel="stylesheet" href="../../../static/myApp/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">"一报告两评议"系统</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          登陆成功
+        </a>
+      </li>
+      <li class="layui-nav-item"><a href="">退出</a></li>
+    </ul>
+  </div>
+
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+<ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd>
+                        <a href="/myApp/User/acceptinfo/">通知</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/User/newselect/">新选拔任用干部民主评议</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/User/usepeople/">选人用人工作评议</a>
+                    </dd>
+                </li>
+            </ul>
+    </div>
+  </div>
+
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;"> <div align="center">
+              通知
+           </div>
+
+            <table class="layui-hide" id="test"></table>
+
+
+
+
+    </div>
+  </div>
+
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © 平朔集团
+  </div>
+</div>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+
+});
+</script>
+
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+
+  table.render({
+    elem: '#test'
+    ,url:'../test1.json'
+    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+    ,cols: [[
+      {field:'id', width:'20%', title: '发布时间', sort: true}
+      ,{field:'username', width:'80%', title: '通知内容'}
+    ]]
+  });
+});
+</script>
+
+
+</body>
+</html>

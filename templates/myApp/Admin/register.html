@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册二级管理员</title>
+    <link rel="stylesheet" href="../layui-v2.5.5">
+    <script src="../../../static/myApp/layui/layui.js"></script>
+    <link rel="stylesheet" href="../../../static/myApp/layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">"一报告两评议"系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    一级管理员
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd>
+                        <a href="/myApp/Admin/inform/">发布通知</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/register/">注册二级管理员</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/ctl/">管理二级管理员</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/canditate/">导入被评人</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/result/">查看评议结果</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/check/">实时查询</a>
+                    </dd>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-container" style="margin-top: 30px;">
+            <div class="layui-row">
+                <div class="layui-col-md9">
+
+
+                    <form class="layui-form">
+                        {% csrf_token%}
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">二级单位</label>
+                            <div class="layui-input-block">
+                                <select name="secondDepart" lay-verify="required" placeholder="请选择二级单位名称">
+                                    <option value=""></option>
+                                    <option value="安太堡露天矿">安太堡露天矿</option>
+                                    <option value="安家岭露天矿">安家岭露天矿</option>
+                                    <option value="东露天矿">东露天矿</option>
+                                    <option value="中煤平朔集团有限公司">中煤平朔集团有限公司</option>
+                                    <option value="井工一矿">井工一矿</option>
+                                    <option value="井工二矿">井工二矿</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-block">
+                                <input id="input" class="layui-input" name="secondManagerName" type="text" required
+                                       lay-verify="required" placeholder="请输入用户名">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn" lay-submit="" lay-filter="form">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 平朔集团
+    </div>
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+    layui.use('form', function () {
+        var form = layui.form;
+
+        form.on('submit(form)', function (data) {
+            console.log("secondDepart=" + data.field.secondDepart + "&secondManagerName=" + data.field.secondManagerName)
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", "/myApp/Admin/registerManager", true);
+            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+            xhr.send("secondDepart=" + data.field.secondDepart + "&secondManagerName=" + data.field.secondManagerName);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if (xhr.responseText == "ok") {
+                        layer.open({
+                            title: '提示',
+                            content: '创建账号成功！',
+                            yes: function (index, layero) {
+                                //do something
+                                document.getElementById('input').value = ""; //如果设定了yes回调，需进行手工关闭
+                                layer.close(index);
+                            },
+                            cancel: function (index, layero) {
+                                document.getElementById('input').value = "";
+                                layer.close(index);
+                                return false;
+                            }
+                        });
+                    } else if (xhr.responseText == "toolong") {
+                        layer.open({
+                            title: '提示',
+                            content: '账号名过长，请重新选择账号名！',
+                            yes: function (index, layero) {
+                                //do something
+                                document.getElementById('input').value = ""; //如果设定了yes回调，需进行手工关闭
+                                layer.close(index);
+                            },
+                            cancel: function (index, layero) {
+                                document.getElementById('input').value = "";
+                                layer.close(index);
+                                return false;
+                            }
+                        });
+                    } else {
+                        layer.open({
+                            title: '提示',
+                            content: '账号已存在，请勿重复创建！',
+                            yes: function (index, layero) {
+                                //do something
+                                document.getElementById('input').value = ""; //如果设定了yes回调，需进行手工关闭
+                                layer.close(index);
+                            },
+                            cancel: function (index, layero) {
+                                document.getElementById('input').value = "";
+                                layer.close(index);
+                                return false;
+                            }
+                        });
+                    }
+                    ;
+                }
+                ;
+            };
+        })
+
+    })
+</script>
+
+
+</body>
+</html>

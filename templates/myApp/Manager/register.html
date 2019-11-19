@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>二级管理-创建随机账户</title>
+    <link rel="stylesheet" href="../../../static/myApp/layui/css/layui.css" media="all">
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">“一报告两评议”系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    二级管理员
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">一级管理员</a></dd>
+                    <dd><a href="">普通用户</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd>
+                        <a href="/myApp/Manager/inform/">发布通知</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Manager/register/">创建随机账户</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Manager/addpeople/">参评人员导入</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Manager/result/">评议结果</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Manager/check/">实时查询</a>
+                    </dd>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding-top: 15px;">
+            <div class="layui-container">
+                <div class="layui-row">
+                    <div class="layui-col-md9">
+                        <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">随机码个数</label>
+                                <div class="layui-input-block">
+                                    <input id="input" type="text" name="randaccount" required lay-verify="required"
+                                           value="50"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="create">立即创建</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-col-md12">
+                        <table id="userList" lay-filter="test"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            ©平朔煤矿
+        </div>
+        <script src="../../../static/myApp/layui/layui.js"></script>
+        <script>
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+
+            layui.use('form', function () {
+                var form = layui.form;
+
+                //监听提交
+                form.on('submit(create)', function (data) {
+                    console.log(data.field)
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("post", "/myApp/Manager/registerUser", true);
+                    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+                    xhr.send("registerNumber=" + data.field.randaccount);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            if (xhr.responseText == "ok") {
+                                layer.open({
+                                    title: '提示',
+                                    content: '创建账号成功！',
+                                    yes: function (index, layero) {
+                                        //do something
+                                        document.getElementById('input').value = "50"; //如果设定了yes回调，需进行手工关闭
+                                        layer.close(index);
+                                    },
+                                    cancel: function (index, layero) {
+                                        document.getElementById('input').value = "50";
+                                        layer.close(index);
+                                        return false;
+                                    }
+                                });
+                            } else {
+                                layer.open({
+                                    title: '提示',
+                                    content: '请输入数字！',
+                                    yes: function (index, layero) {
+                                        //do something
+                                        document.getElementById('input').value = "50"; //如果设定了yes回调，需进行手工关闭
+                                        layer.close(index);
+                                    },
+                                    cancel: function (index, layero) {
+                                        document.getElementById('input').value = "50";
+                                        layer.close(index);
+                                        return false;
+                                    }
+                                });
+                            }
+                            ;
+                        }
+                        ;
+                    };
+                    return false;
+                });
+            });
+
+            layui.use('table', function () {
+                var table = layui.table;
+
+                //第一个实例
+                table.render({
+                    elem: '#userList'
+                    , url: '/myApp/Manager/userList' //数据接口
+                    , cols: [[ //表头
+                        {field: 'uname', title: 'ID', width: '85%', sort: true, fixed: 'left'}
+                        , {fixed: 'right', align: 'center', width: '15%', toolbar: '#bar'}
+                    ]]
+                });
+
+                table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                    var data = obj.data; //获得当前行数据
+                    console.log(data);
+                    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                    var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                    if (layEvent === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                            layer.close(index);
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("post", "/myApp/Manager/deleteUser", true);
+                            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+                            xhr.send("uname=" + data.uname);
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    if (xhr.responseText == "ok") {
+                                        console.log('ok')
+                                    }
+                                    ;
+                                }
+                                ;
+                            };
+                            //向服务端发送删除指令
+                        });
+                    }
+                });
+
+            });
+        </script>
+        <script type="text/html" id="bar">
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+    </div>
+</div>
+</body>
+
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <title>管理二级管理员</title>
+    <script type="text/javascript" src="{% static '/myApp/layui/layui.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'myApp/css/layui.css' %}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">"一报告两评议"系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    一级管理员
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd>
+                        <a href="/myApp/Admin/inform/">发布通知</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/register/">注册二级管理员</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/ctl/">管理二级管理员</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/canditate/">导入被评人</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/result/">查看评议结果</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/Admin/check/">实时查询</a>
+                    </dd>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div class="layui-container" style="margin-top: 30px;">
+                <div class="layui-row">
+                    <div class="layui-col-md9">
+                        <form class="layui-form" action="">
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">二级单位</label>
+                                <div class="layui-input-block">
+                                    <select name="city" lay-verify="required" placeholder="请选择二级单位名称">
+
+                                        <option value=""></option>
+                                        <option value="安太堡露天矿">安太堡露天矿</option>
+                                        <option value="安家岭露天矿">安家岭露天矿</option>
+                                        <option value="东露天矿">东露天矿</option>
+                                        <option value="中煤平朔集团有限公司">中煤平朔集团有限公司</option>
+                                        <option value="井工一矿">井工一矿</option>
+                                        <option value="井工二矿">井工二矿</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="layui-col-md11">
+
+                        <table id="demo" lay-filter="test"></table>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © 平朔集团
+</div>
+</div>
+<script>
+    //JavaScript代码区域
+    var url = "/myApp/Admin/managerlist";
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+    layui.use('form', function () {
+        var form = layui.form;
+        form.on('select', function (data) {
+            url = url + '?secondDepart=' + data.value
+            console.log(data.value); //得到被选中的值
+            layui.use('table', function () {
+                var table = layui.table;
+                table.render({
+                    elem: '#demo',
+                    url: url
+                    , cols:
+                        [[ //表头
+                            {type: 'checkbox', fixed: 'left'}
+                            , {field: 'mname', title: 'ID', width: '85%', sort: true, fixed: 'left'}
+                            , {fixed: 'right', align: 'center', width: '15%', toolbar: '#bar'}
+
+                        ]],
+                    done: function () {
+                        url = "/myApp/Admin/managerlist";
+                    }
+                });
+
+
+                table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                    var data = obj.data; //获得当前行数据
+                    console.log(data);
+                    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                    var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+                    if (layEvent === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                            layer.close(index);
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("post", "/myApp/Admin/deleteManager", true);
+                            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+                            xhr.send("id=" + data.mname);
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    if (xhr.responseText == "ok") {
+                                        console.log('ok')
+                                    }
+                                    ;
+                                }
+                                ;
+                            };
+                            //向服务端发送删除指令
+                        });
+                    }
+                });
+            })
+        });
+    })
+
+</script>
+<script type="text/html" id="bar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+</body>
+</html>

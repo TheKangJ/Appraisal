@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新选拔任用干部工作民主评议</title>
+    <link rel="stylesheet" href="../layui-v2.5.5">
+    <link rel="stylesheet" href="{% static 'myApp/css/layui.css' %}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-col-md3">
+            <div class="layui-logo">
+                <img src="../../../static/myApp/images/logo.png" class="layui-nav-img">
+                <span style="font-size: 15px;color: #FFB800;">"一报告两评议"系统</span>
+            </div>
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    登陆成功
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd>
+                        <a href="/myApp/User/acceptinfo/">通知</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/User/newselect/">新选拔任用干部民主评议</a>
+                    </dd>
+                    <dd>
+                        <a href="/myApp/User/usepeople/">选人用人工作评议</a>
+                    </dd>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <div class="layui-container">
+                <div class="layui-row">
+                    <div style="text-align: center">新选拔任用干部民主评选表</div>
+                    <div class="layui-col-12" id="table"></div>
+                    <div class="layui-col-2">
+                        <button id="submit" class="layui-btn">提交</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 平朔集团
+    </div>
+</div>
+<script type="text/javascript" src="{% static '/myApp/layui/layui.js' %}"></script>
+<script src="{% static '/myApp/js/collect.js'%}"></script>
+<script src="{% static '/myApp/js/static.js'%}"></script>
+
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "/myApp/Admin/showcanditate", true);
+    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+    xhr.send("user=1");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(JSON.parse(xhr.responseText))
+            var html = maketable(JSON.parse(xhr.responseText));
+            document.getElementById('table').innerHTML = html;
+        }
+    };
+</script>
+
+</body>
+</html>
